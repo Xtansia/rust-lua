@@ -1,6 +1,6 @@
 .PHONY: test all clean lib cargo-prep
 
-LUA_PCNAME = $(if $(shell pkg-config --exists lua5.1 && echo yes),lua5.1,lua)
+LUA_PCNAME = $(if $(shell pkg-config --exists lua5.1 && echo yes),lua5.1,$(if $(shell pkg-config --exists lua51 && echo yes),lua51,lua))
 LUA_LIBNAME = $(firstword $(patsubst -llua%,lua%,$(filter -llua%,$(shell pkg-config --libs-only-l $(LUA_PCNAME)))))
 LUA_LIBDIRS = $(patsubst -L%,%,$(shell pkg-config --libs-only-L $(LUA_PCNAME)))
 CFLAGS += $(shell pkg-config --cflags $(LUA_PCNAME))
